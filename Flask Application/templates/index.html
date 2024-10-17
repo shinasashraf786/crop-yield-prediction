@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Yield Prediction</title>
+    
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background:url('static/image7.jpg') no-repeat center center fixed;
+        background-size: cover;
+        
+    }
+
+    h1 {
+        text-align: center;
+        color: #e8f1e8; /* Green color for the heading */
+        border-bottom: 2px solid #4CAF50; /* Underline effect */
+        padding-bottom: 10px; /* Space between text and underline */
+        background-color: rgb(10, 135, 6);
+        padding: 20px;
+    }
+
+    form {
+        display: flex;
+        justify-content: space-between;
+        max-width: 800px;
+        margin: 0 auto;
+        flex-wrap: wrap; /* Allow items to wrap to the next line */
+    }
+
+    .form-group {
+        flex: 1;
+        margin-top: 40px;
+        margin-right: 20px;
+        margin-bottom: 20px; /* Add margin at the bottom for spacing between groups */
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    select, input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+    .result {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+            background-color: #ccc;
+        }
+</style>
+
+<body>
+    <h1>Indian Crop Yield Prediction</h1>
+    <form action="/predict" method="post">
+        <div class="form-group">
+            <!-- Dropdown for Crop -->
+            <label for="crop">Crop:</label>
+            <select id="crop" name="crop" required>
+                {% for crop, value in crop_dict.items() %}
+                    <option value="{{ value }}">{{ crop }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Dropdown for Season -->
+            <label for="season">Season:</label>
+            <select id="season" name="season" required>
+                {% for season, value in season_dict.items() %}
+                    <option value="{{ value }}">{{ season }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Other input fields -->
+            <label for="area">Area:</label>
+            <input type="text" id="area" name="area" required>
+
+            <label for="production">Production:</label>
+            <input type="text" id="production" name="production" required>
+        </div>
+
+        <div class="form-group">
+            <!-- Dropdown for State -->
+            <label for="state">State:</label>
+            <select id="state" name="state" required>
+                {% for state, value in state_dict.items() %}
+                    <option value="{{ value }}">{{ state }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Other input fields -->
+            <label for="annual_rainfall">Annual Rainfall:</label>
+            <input type="text" id="annual_rainfall" name="annual_rainfall" required>
+
+            <label for="fertilizer">Fertilizer:</label>
+            <input type="text" id="fertilizer" name="fertilizer" required>
+
+            <label for="pesticide">Pesticide:</label>
+            <input type="text" id="pesticide" name="pesticide" required>
+        </div>
+
+        <button type="submit">Predict</button>
+    </form>
+    {% if result is defined %}
+    <div class="result">
+
+            <p>Predicted yield: {{ result }}</p>
+        
+    </div>
+    {% endif %}
+</body>
+</html>
